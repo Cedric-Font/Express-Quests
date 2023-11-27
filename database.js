@@ -10,14 +10,6 @@ const database = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-database
-  .query("select * from users")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
 
   
 
