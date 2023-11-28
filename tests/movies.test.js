@@ -1,16 +1,14 @@
 const request = require("supertest");
 const database = require("../database")
 
-afterAll(() => database.end());
+
 
 const app = require("../src/app");
 
 describe("GET /api/movies", () => {
   it("should return all movies", async () => {
     const response = await request(app).get("/api/movies");
-
     expect(response.headers["content-type"]).toMatch(/json/);
-
     expect(response.status).toEqual(200);
   });
 });
@@ -47,6 +45,7 @@ describe("POST /api/movies", () => {
     expect(response.status).toEqual(201);
     expect(response.body).toHaveProperty("id");
     expect(typeof response.body.id).toBe("number");
+    
 
     const [result] = await database.query(
       "SELECT * FROM movies WHERE id=?",
@@ -54,10 +53,6 @@ describe("POST /api/movies", () => {
     );
 
     const [movieInDatabase] = result;
-
-    expect(movieInDatabase).toHaveProperty("id");
-
-    expect(movieInDatabase).toHaveProperty("title");
     expect(movieInDatabase.title).toStrictEqual(newMovie.title);
   });
 
@@ -71,3 +66,4 @@ describe("POST /api/movies", () => {
     expect(response.status).toEqual(500);
   });
 });
+ afterAll(() => database.end());

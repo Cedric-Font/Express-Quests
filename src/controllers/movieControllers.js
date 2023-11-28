@@ -59,6 +59,7 @@ const getMovieById = (req, res) => {
 
 const postMovie = (req, res) => {
   const { title, director, year, color, duration } = req.body;
+
   database
   .query(
     "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
@@ -68,10 +69,9 @@ const postMovie = (req, res) => {
     // wait for it
     res.status(201).send({ id: result.insertId });
   })
-  // .catch((err) => {
-  //   console.error(err);
-  //   res.sendStatus(500);
-  // });
+  .catch((err) => {
+    res.sendStatus(500);
+  });
 
 };
 
