@@ -46,7 +46,7 @@ describe("POST /api/users", () => {
   it("should be return an error", async () =>{
     const newUsersWithoutProps = {firstname: "cedric"}
 const response = await request(app).post("/api/users").send(newUsersWithoutProps);
- expect(response.status).toEqual(500);
+ expect(response.status).toEqual(422);
 
 })
 });
@@ -111,7 +111,7 @@ describe("PUT /api/users/:id", () => {
       .put(`/api/users/1`)
       .send(userWithMissingProps);
 
-    expect(response.status).toEqual(500);
+    expect(response.status).toEqual(422);
   });
 
   it("should return no users", async () => {
