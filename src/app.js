@@ -24,4 +24,7 @@ app.post("/api/movies", validateMovie, movieControllers.postMovie);
 //put route
 app.put("/api/movies/:id", validateMovie, movieControllers.upDateMovies);
 app.put("/api/users/:id", validateUsers, usersControlers.upDateUsers);
+//delete route
+app.delete("/api/movies/:id",movieControllers.deleteMovies)
+app.delete("/api/users/:id",usersControlers.deleteUsers)
 module.exports = app;
