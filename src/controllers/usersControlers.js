@@ -84,6 +84,7 @@ const deleteUsers = (req, res) => {
       res.sendStatus(500);
     });
 };
+
   
 
   module.exports = {

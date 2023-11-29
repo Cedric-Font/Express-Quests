@@ -1,8 +1,5 @@
 const request = require("supertest");
 const database = require("../database")
-
-
-
 const app = require("../src/app");
 
 describe("GET /api/movies", () => {
@@ -32,7 +29,7 @@ describe("GET /api/movies/:id", () => {
 describe("POST /api/movies", () => {
   it("should return created movie", async () => {
    const newMovie = {
-      title: "Star Wars",
+      title: "La Guerre des Mondes",
       director: "George Lucas",
       year: "1977",
       color: "1",
@@ -144,4 +141,19 @@ describe("PUT /api/movies/:id", () => {
     expect(response.status).toEqual(404);
   });
 });
+
+describe("DELETE /api/movies/:id",()=>{
+  it("should be return code 204", async () => {
+    let response = []
+    const [result] = await database.query("SELECT * FROM movies ORDER BY id DESC");
+    response = await request(app).delete(`/api/movies/${result[0].id}`);
+    
+    expect(response.status).toEqual(204)
+  })
+  it("shoulb be return an error", async () => {
+    const response = await request(app).delete("/api/movies/0");
+
+    expect(response.status).toEqual(404)
+  })
+})
  afterAll(() => database.end());

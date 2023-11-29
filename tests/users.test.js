@@ -128,4 +128,18 @@ describe("PUT /api/users/:id", () => {
     expect(response.status).toEqual(404);
   });
 });
+describe("DELETE /api/users/:id",()=>{
+  it("should be return code 204", async () => {
+    let response = []
+    const [result] = await database.query("SELECT * FROM users ORDER BY id DESC");
+    response = await request(app).delete(`/api/users/${result[0].id}`);
+    
+    expect(response.status).toEqual(204)
+  })
+  it("shoulb be return an error", async () => {
+    const response = await request(app).delete("/api/users/0");
+
+    expect(response.status).toEqual(404)
+  })
+})
 afterAll(() => database.end());
